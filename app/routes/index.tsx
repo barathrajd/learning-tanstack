@@ -17,6 +17,10 @@ const getCount = createServerFn({
 	return readCount();
 });
 
+const greetings = createServerFn({ method: "GET" })
+	.validator((d: string) => d)
+	.handler((ctx) => ctx.data);
+
 const updateCount = createServerFn({ method: "POST" })
 	.validator((d: number) => d)
 	.handler(async ({ data }) => {
@@ -26,7 +30,11 @@ const updateCount = createServerFn({ method: "POST" })
 
 export const Route = createFileRoute("/")({
 	component: Home,
-	loader: async () => await getCount(),
+	loader: async () => {
+		const userName = await greetings({ data: "ttes" });
+		console.log(userName);
+		return await getCount();
+	},
 });
 
 function Home() {
