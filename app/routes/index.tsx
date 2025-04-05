@@ -31,9 +31,10 @@ const updateCount = createServerFn({ method: "POST" })
 export const Route = createFileRoute("/")({
 	component: Home,
 	loader: async () => {
-		const userName = await greetings({ data: "ttes" });
+		const count = await getCount();
+		const userName = await greetings({ data: `tes - ${count}` });
 		console.log(userName);
-		return await getCount();
+		return count;
 	},
 });
 
